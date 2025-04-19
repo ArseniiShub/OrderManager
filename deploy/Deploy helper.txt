@@ -1,0 +1,12 @@
+Docker compose:
+1.
+cd into root directory (where .slnx file is located)
+2.
+docker compose -f .\deploy\docker-compose.yml up
+
+WriteModel/ReadModel Dockerfile run:
+1.
+cd into be directory (where OrderManager.WriteModel.Api, OrderManager.Shared and other directories are located)
+2.
+docker run -f OrderManager.WriteModel.Api\Dockerfile .
+docker run -f OrderManager.ReadModel.Api\Dockerfile .

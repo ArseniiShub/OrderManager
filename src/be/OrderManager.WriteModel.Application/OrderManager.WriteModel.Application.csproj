@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OrderManager.WriteModel.Domain\OrderManager.WriteModel.Domain.csproj" />
+      <ProjectReference Include="..\OrderManager.Shared\OrderManager.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="WolverineFx.Marten" Version="3.12.1" />
+      <PackageReference Include="WolverineFx.RabbitMQ" Version="3.12.1" />
+    </ItemGroup>
+
+</Project>

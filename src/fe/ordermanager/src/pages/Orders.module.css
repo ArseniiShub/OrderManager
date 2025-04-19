@@ -1,0 +1,33 @@
+.div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.div button {
+  font-size: larger;
+}
+
+.table {
+  width: 100%;
+  font-size: small;
+  background: var(--color-gray-700);
+  border-radius: 4px;
+  padding: 1rem 1rem 0.5rem 1rem;
+  border-collapse: separate;
+  border-spacing: 0 0.5em;
+}
+
+.table thead th {
+  border-bottom: 2px solid var(--color-gray-500);
+  font-size: larger;
+  padding: 0 0.5rem 1rem 0.5rem;
+}
+
+.table thead tr th:first-child {
+  min-width: 3rem;
+}
+
+.table tbody tr:hover {
+  background: var(--color-gray-600);
+}

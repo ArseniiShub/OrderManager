@@ -1,0 +1,30 @@
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: left;
+  align-items: center;
+}
+
+.order {
+  padding: 1.5rem;
+  background: var(--color-gray-700);
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+}
+
+.order p {
+  display: flex;
+  align-items: center;
+}
+
+.order p label:first-of-type {
+  width: 20%;
+  text-align: right;
+  margin-right: 1.5rem;
+}
+
+.order li {
+  color: var(--color-error-800);
+}

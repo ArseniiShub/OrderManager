@@ -1,0 +1,23 @@
+.input {
+  font: inherit;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-gray-500);
+  background-color: var(--color-gray-400);
+  color: var(--color-gray-800);
+  width: 20rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary-400);
+  background-color: var(--color-gray-100);
+}
+
+.input::placeholder {
+  color: var(--color-gray-400);
+}
+
+.input::selection {
+  background-color: var(--color-primary-400);
+}

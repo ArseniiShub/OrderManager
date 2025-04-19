@@ -1,0 +1,30 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "scalar/v1",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION_STRING": "Server=localhost; Port=5432; Database=writemodel; User Id=admin; Password=admin;",
+        "RABBITMQ_CONNECTION_STRING": "amqp://admin:admin@localhost:5672",
+        "ASPNETCORE_HTTP_PORTS": "5000"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "scalar/v1",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION_STRING": "Server=localhost; Port=5432; Database=writemodel; User Id=admin; Password=admin;",
+        "RABBITMQ_CONNECTION_STRING": "amqp://admin:admin@localhost:5672",
+        "ASPNETCORE_HTTP_PORTS": "5000",
+        "ASPNETCORE_HTTPS_PORTS": "5001"
+      }
+    }
+  }
+}

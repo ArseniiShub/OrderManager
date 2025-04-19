@@ -1,0 +1,32 @@
+.tr td {
+  text-align: center;
+  justify-items: center;
+  padding: 0 1rem;
+}
+
+.tr td:nth-child(2) {
+  width: 33%
+}
+
+.archived td:not(:first-child) {
+  font-style: italic;
+  color: var(--color-gray-400);
+  text-decoration: line-through;
+}
+
+.img {
+  width: 2rem;
+  height: 2.5rem;
+  object-fit: contain;
+}
+
+.button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  display: flex;
+}
+
+.button:hover {
+  background: var(--color-gray-500);
+}

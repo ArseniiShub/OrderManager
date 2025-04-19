@@ -1,0 +1,134 @@
+services:
+  
+  rabbitmq:
+    image: rabbitmq:4.0.8-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "./rabbitmq/rabbitmq_enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+  
+  postgres:
+    image: postgres:17.4
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_MULTIPLE_DATABASES: writemodel,readmodel,keycloak
+      PGPORT: 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres:/docker-entrypoint-initdb.d
+      - defaultdbdata:/var/lib/postgresql/data
+  
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.2
+    container_name: keycloak
+    command: [ "start-dev", "--import-realm" ]
+    environment:
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_IMPORT: /opt/keycloak/data/import/realm-config.json
+      KC_DB: postgres
+      KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: admin
+    ports:
+      - "18080:8080"
+    volumes:
+      - ./keycloak/realm-config.json:/opt/keycloak/data/import/realm-config.json
+    depends_on:
+      - postgres
+  
+  ordermanagerwm:
+    image: ordermanagerwm:dev
+    container_name: ordermanagerwm
+    build:
+      context: ../src/be
+      dockerfile: ./OrderManager.WriteModel.Api/Dockerfile
+      args:
+        TAG: dev
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: 5000
+      ASPNETCORE_HTTPS_PORTS: 5001
+      ASPNETCORE_Kestrel__Certificates__Default__Password: P@ssw0rd
+      ASPNETCORE_Kestrel__Certificates__Default__Path: "/https/aspnetapp.pfx"
+      DB_CONNECTION_STRING: "Server=postgres; Port=5432; Database=writemodel; User Id=admin; Password=admin;"
+      RABBITMQ_CONNECTION_STRING: "amqp://admin:admin@rabbitmq:5672"
+    volumes:
+      - E:/Dev/Certs/https:/https:ro
+    depends_on:
+      postgres:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+  
+  ordermanagerrm:
+    image: ordermanagerrm:dev
+    container_name: ordermanagerrm
+    build:
+      context: ../src/be
+      dockerfile: ./OrderManager.ReadModel.Api/Dockerfile
+      args:
+        TAG: dev
+    ports:
+      - "5002:5002"
+      - "5003:5003"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: 5002
+      ASPNETCORE_HTTPS_PORTS: 5003
+      ASPNETCORE_Kestrel__Certificates__Default__Password: P@ssw0rd
+      ASPNETCORE_Kestrel__Certificates__Default__Path: "/https/aspnetapp.pfx"
+      DB_CONNECTION_STRING: "Server=postgres; Port=5432; Database=readmodel; User Id=admin; Password=admin;"
+      RABBITMQ_CONNECTION_STRING: "amqp://admin:admin@rabbitmq:5672"
+    volumes:
+      - E:/Dev/Certs/https:/https:ro
+    depends_on:
+      postgres:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+
+  ordermanagerui:
+    image: ordermanagerui:dev
+    container_name: ordermanagerui
+    build:
+      context: ../src/fe/ordermanager
+      dockerfile: Dockerfile
+      args:
+        VITE_WM_API_URL: "https://localhost:5001/api/"
+        VITE_RM_API_URL: "https://localhost:5003/api/"
+        VITE_KEYCLOAK_URL: "http://localhost:18080"
+        VITE_KEYCLOAK_REALM: "ordermanager"
+        VITE_KEYCLOAK_CLIENT_ID: "ordermanager-public-ui"
+    ports:
+      - "5173:80"
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - ordermanagerwm
+      - ordermanagerrm
+      - keycloak
+
+volumes:
+  defaultdbdata:
+    driver: local
+  keycloakdbdata:
+    driver: local

@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/1. solution items/">
+    <File Path=".gitignore" />
+    <File Path=".gitattributes" />
+  </Folder>
+  <Folder Name="/2. deploy/">
+    <Project Path="deploy/docker-compose.dcproj" />
+    <File Path="deploy\Deploy helper.txt" />
+  </Folder>
+  <Folder Name="/2. deploy/keycloak/">
+    <File Path="deploy\keycloak\realm-config.json" />
+  </Folder>
+  <Folder Name="/2. deploy/postgres/">
+    <File Path="deploy\postgres\create_multiple_databases.sh" />
+  </Folder>
+  <Folder Name="/2. deploy/rabbitmq/">
+    <File Path="deploy\rabbitmq\rabbitmq_enabled_plugins" />
+  </Folder>
+  <Folder Name="/3. src/" />
+  <Folder Name="/3. src/be/">
+    <Project Path="src\be\OrderManager.ReadModel.Api\OrderManager.ReadModel.Api.csproj" Type="Classic C#" />
+    <Project Path="src\be\OrderManager.Shared\OrderManager.Shared.csproj" Type="Classic C#" />
+    <Project Path="src\be\OrderManager.WriteModel.Api\OrderManager.WriteModel.Api.csproj" Type="Classic C#" />
+    <Project Path="src\be\OrderManager.WriteModel.Application\OrderManager.WriteModel.Application.csproj" Type="Classic C#" />
+    <Project Path="src\be\OrderManager.WriteModel.Domain\OrderManager.WriteModel.Domain.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/3. src/fe/" />
+</Solution>

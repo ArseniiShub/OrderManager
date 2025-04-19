@@ -1,0 +1,7 @@
+.header {
+  max-width: 60rem;
+  max-height: 10rem;
+  margin: auto;
+  padding: 2rem;
+  color: var(--color-primary-400);
+}
